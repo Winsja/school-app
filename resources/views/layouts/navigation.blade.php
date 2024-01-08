@@ -6,7 +6,7 @@
 
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('dashboard')">
+                    <x-nav-link :href="route('dashboard')" class="text-xl">
                         {{ __('Dziennik lekcyjny') }}
                     </x-nav-link>
                 </div>

@@ -17,11 +17,20 @@
         @csrf
         @method('patch')
 
+        <!-- Name edytuje tylko admin bo tak -->
+        @if(Auth::user()->role == 'Student' || Auth::user()->role == 'Nauczyciel')
+        <div class="hidden">
+            <x-input-label for="name" :value="__('Name')" />
+            <x-text-input id="name" name="name" type="text" class="mt-1 block w-full" :value="old('name', $user->name)" required autofocus autocomplete="name" />
+            <x-input-error class="mt-2" :messages="$errors->get('name')" />
+        </div>
+        @else
         <div>
             <x-input-label for="name" :value="__('Name')" />
             <x-text-input id="name" name="name" type="text" class="mt-1 block w-full" :value="old('name', $user->name)" required autofocus autocomplete="name" />
             <x-input-error class="mt-2" :messages="$errors->get('name')" />
         </div>
+        @endif
 
         <div>
             <x-input-label for="email" :value="__('Email')" />

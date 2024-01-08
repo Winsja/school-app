@@ -1,7 +1,13 @@
 <?php
 
+use App\Http\Controllers\GroupController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\StudentController;
 use App\Http\Controllers\SubjectController;
+use App\Http\Controllers\TeacherController;
+use App\Http\Controllers\UserController;
+use App\Models\Group;
+use App\Models\Student;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -32,5 +38,15 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::resource('/subjects', SubjectController::class);
+
+Route::resource('/teachers', TeacherController::class);
+
+Route::resource('/users', UserController::class);
+
+Route::resource('/students', StudentController::class);
+Route::get('/groups/{group}/addToGroup', [GroupController::class, 'addToGroup'])->name('groups.addToGroup');
+Route::resource('/groups', GroupController::class);
+
+
 
 require __DIR__ . '/auth.php';

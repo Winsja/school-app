@@ -39,6 +39,9 @@ class SubjectController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
+        $request->validate([
+            'name'     => 'required|string|max:30',
+        ]);
         $input = $request->all();
         Subject::create($input);
         return redirect('subjects')->with('flash_msg', 'Przedmiot został dodany!');
@@ -73,6 +76,9 @@ class SubjectController extends Controller
      */
     public function update(Request $request, string $id): RedirectResponse
     {
+        $request->validate([
+            'name'     => 'required|string|max:30',
+        ]);
         $subjects = Subject::find($id);
         $input = $request->all();
         $subjects->update($input);
