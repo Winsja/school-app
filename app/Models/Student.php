@@ -11,4 +11,9 @@ class Student extends Model
     protected $primaryKey = 'id';
     protected $fillable = ['name', 'phone', 'address'];
     use HasFactory;
+
+    public function groups()
+    {
+        return $this->belongsTo(Group::class, 'students_groups', 'student_id', 'group_id');
+    }
 }

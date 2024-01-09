@@ -49,7 +49,7 @@
                         {{ $item->group_name }}
                     </td>
                     <td class="px-6 py-4">
-                        {{ $item->group_name }}
+                        {{ $item->students->count() }}
                     </td>
                     <td class="px-6 py-4">
                         <div class="inline-flex rounded-md shadow-sm" role="group">

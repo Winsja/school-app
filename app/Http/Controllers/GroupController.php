@@ -3,8 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Group;
+use App\Models\Student;
+use App\Models\StudentsGroups;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Validation\Rule;
 use Illuminate\View\View;
 
 class GroupController extends Controller
@@ -45,8 +48,12 @@ class GroupController extends Controller
      */
     public function show(string $id)
     {
-        $groups = Group::find($id);
-        return view('backend.groups.show')->with('groups', $groups);
+        $students = Student::pluck('name', 'id');
+        $studentsInGroup = Group::find($id)->students;
+        $groups = DB::table('groups')->find($id);
+        return view('backend.groups.show', compact('studentsInGroup', 'groups', 'students'));
+        // $groups = Group::find($id);
+        // return view('backend.groups.show')->with('groups', $groups);
     }
 
     /**
@@ -82,18 +89,33 @@ class GroupController extends Controller
         return redirect('groups')->with('flash_msg', 'Grupa została usunięta!');
     }
 
-    // DODAJ STUDENTA DO ISTNIEJACEJ GRUPY
-    // public function addToGroup($id)
-    // {
-    //     $groups = Group::find($id);
-    //     return view('backend.groups.addToGroup')->with('groups', $groups);
-    // }
+    public function detachFromGroup(string $g_id, string $s_id)
+    {
+        DB::table('students_groups')
+            ->where('group_id', '=', $g_id)
+            ->where('student_id', '=', $s_id)
+            ->delete();
+        // $student = Student::find($s_id);;
+        return redirect('groups')->with('flash_msg', 'Student został usunięty z grupy!');
+    }
 
-    // public function addToGroupStore(Request $request)
-    // {
-    //     // XD
-    //     $input = $request->all();
-    //     Group::create($input);
-    //     return redirect('groups')->with('flash_msg', 'Student został dodany do grupy!');
-    // }
+    public function addToGroup(Request $request, Group $group)
+    {
+        $request->validate([
+            'student_id' => [
+                'required',
+                'exists:students,id',
+                Rule::unique('students_groups')->where(function ($query) use ($group) {
+                    return $query->where('group_id', $group->id);
+                }),
+            ],
+        ]);
+
+        $student = Student::find($request->input('student_id'));
+
+        // Attach the student to the group
+        $group->students()->attach($student);
+        // $student = Student::find($s_id);;
+        return redirect('groups')->with('flash_msg', 'Student został dodany do grupy!');
+    }
 }

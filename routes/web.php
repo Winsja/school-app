@@ -3,11 +3,13 @@
 use App\Http\Controllers\GroupController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\StudentController;
+use App\Http\Controllers\StudentsGroupsController;
 use App\Http\Controllers\SubjectController;
 use App\Http\Controllers\TeacherController;
 use App\Http\Controllers\UserController;
 use App\Models\Group;
 use App\Models\Student;
+use App\Models\StudentsGroups;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -44,8 +46,10 @@ Route::resource('/teachers', TeacherController::class);
 Route::resource('/users', UserController::class);
 
 Route::resource('/students', StudentController::class);
-Route::get('/groups/{group}/addToGroup', [GroupController::class, 'addToGroup'])->name('groups.addToGroup');
 Route::resource('/groups', GroupController::class);
+Route::post('/groups/addToGroup/{group}', [GroupController::class, 'addToGroup'])->name('groups.addToGroup');
+Route::delete('/groups/{g_id}/{s_id}', [GroupController::class, 'detachFromGroup'])->name('groups.detachFromGroup');
+Route::resource('/groupss', StudentsGroupsController::class);
 
 
 

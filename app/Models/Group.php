@@ -11,4 +11,9 @@ class Group extends Model
     protected $primaryKey = 'id';
     protected $fillable = ['group_name'];
     use HasFactory;
+
+    public function students()
+    {
+        return $this->belongsToMany(Student::class, 'students_groups', 'group_id', 'student_id');
+    }
 }
