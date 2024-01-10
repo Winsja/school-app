@@ -2,6 +2,42 @@
 @section('content')
 
 @if(Auth::user()->role == 'Nauczyciel')
+<div class="flex justify-evenly mt-16">
+    <a href="{{ route('attendanceTeacher.index')}}" class="w-1/3 mx-10">
+        <div class="min-w-300 max-w-xl p-16 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 flex flex-col items-center gap-y-5">
+            <svg class="w-12 h-12 text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" viewBox="0 0 20 20">
+                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.994 19a8.999 8.999 0 1 1 3.53-17.281M5.995 9l4 4 7-8m-1 8v5m-2.5-2.5h5" />
+            </svg>
+            <h5 class="mb-2 text-3xl font-semibold tracking-tight text-gray-900 dark:text-white">Raport obecności</h5>
+        </div>
+    </a>
+    <a href="{{ route('gradesTeacher.index')}}" class="w-1/3 mx-10">
+        <div class="max-w-xl p-16 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 flex flex-col items-center gap-y-5">
+            <svg class="w-12 h-12 text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 16">
+                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 1h4.5a3.5 3.5 0 1 1 0 7H3m0-7v7m0-7H1m2 7h6.5a3.5 3.5 0 1 1 0 7H3m0-7v7m0 0H1" />
+            </svg>
+            <h5 class="mb-2 text-3xl font-semibold tracking-tight text-gray-900 dark:text-white">Oceny</h5>
+        </div>
+    </a>
+    <a href="{{ route('lessons.index')}}" class="w-1/3 mx-10">
+        <div class="max-w-xl p-16 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 flex flex-col items-center gap-y-5">
+            <svg class="w-12 h-12 text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 18">
+                <path d="M9 1.334C7.06.594 1.646-.84.293.653a1.158 1.158 0 0 0-.293.77v13.973c0 .193.046.383.134.55.088.167.214.306.366.403a.932.932 0 0 0 .5.147c.176 0 .348-.05.5-.147 1.059-.32 6.265.851 7.5 1.65V1.334ZM19.707.653C18.353-.84 12.94.593 11 1.333V18c1.234-.799 6.436-1.968 7.5-1.65a.931.931 0 0 0 .5.147.931.931 0 0 0 .5-.148c.152-.096.279-.235.366-.403.088-.167.134-.357.134-.55V1.423a1.158 1.158 0 0 0-.293-.77Z" />
+            </svg>
+            <h5 class="mb-2 text-3xl font-semibold tracking-tight text-gray-900 dark:text-white">Zajęcia</h5>
+        </div>
+    </a>
+</div>
+<div class="flex justify-evenly mt-16">
+    <a href="{{ route('subjectsTeacher.index')}}" class="w-1/3 mx-10">
+        <div class="min-w-300 max-w-xl p-16 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 flex flex-col items-center gap-y-5">
+            <svg class="w-12 h-12 text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 17 10">
+                <path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M6 1h10M6 5h10M6 9h10M1.49 1h.01m-.01 4h.01m-.01 4h.01" />
+            </svg>
+            <h5 class="mb-2 text-3xl font-semibold tracking-tight text-gray-900 dark:text-white">Moje przedmioty</h5>
+        </div>
+    </a>
+</div>
 @elseif(Auth::user()->role == 'Admin')
 <div class="flex justify-evenly mt-16">
     <a href="{{ route('teachers.index')}}" class="w-1/3 mx-10">

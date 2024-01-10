@@ -1,11 +1,17 @@
 <?php
 
 use App\Http\Controllers\GroupController;
+use App\Http\Controllers\LessonsController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\StudentsGroupsController;
 use App\Http\Controllers\SubjectController;
+use App\Http\Controllers\TeacherAttendanceReport;
+use App\Http\Controllers\TeacherAttendanceReportController;
 use App\Http\Controllers\TeacherController;
+use App\Http\Controllers\TeacherGrades;
+use App\Http\Controllers\TeacherGradesController;
+use App\Http\Controllers\TeacherSubjectsController;
 use App\Http\Controllers\UserController;
 use App\Models\Group;
 use App\Models\Student;
@@ -39,18 +45,28 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::resource('/subjects', SubjectController::class);
+// Route do których dostęp powinnien mieć tylko ADMIN
+Route::middleware('auth', 'admin')->group(function () {
+    Route::resource('/subjects', SubjectController::class);
 
-Route::resource('/teachers', TeacherController::class);
+    Route::resource('/teachers', TeacherController::class);
 
-Route::resource('/users', UserController::class);
+    Route::resource('/users', UserController::class);
 
-Route::resource('/students', StudentController::class);
-Route::resource('/groups', GroupController::class);
-Route::post('/groups/addToGroup/{group}', [GroupController::class, 'addToGroup'])->name('groups.addToGroup');
-Route::delete('/groups/{g_id}/{s_id}', [GroupController::class, 'detachFromGroup'])->name('groups.detachFromGroup');
-Route::resource('/groupss', StudentsGroupsController::class);
+    Route::resource('/students', StudentController::class);
 
+    Route::resource('/groups', GroupController::class);
+    // 2 dodatkowe funkcje w route::group
+    Route::post('/groups/addToGroup/{group}', [GroupController::class, 'addToGroup'])->name('groups.addToGroup');
+    Route::delete('/groups/{g_id}/{s_id}', [GroupController::class, 'detachFromGroup'])->name('groups.detachFromGroup');
+});
 
+// Route do których dostęp powinnien mieć tylko NAUCZYCIEL
+Route::middleware('auth', 'teacher')->group(function () {
+    Route::resource('/subjectsTeacher', TeacherSubjectsController::class);
+    Route::resource('/lessons', LessonsController::class);
+    Route::resource('/attendanceTeacher', TeacherAttendanceReportController::class);
+    Route::resource('/gradesTeacher', TeacherGradesController::class);
+});
 
 require __DIR__ . '/auth.php';
