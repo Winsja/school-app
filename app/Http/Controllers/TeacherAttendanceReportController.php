@@ -66,7 +66,8 @@ class TeacherAttendanceReportController extends Controller
             ->leftJoin('students', 'attendance.student_id', '=', 'students.id')
             ->get();
 
-        return view('backendTeacher.attendance.edit')->with('attendance', $id)->with('students', $students);
+        return view('backendTeacher.attendance.edit')->with('attendance', $id)->with('students', $students)
+            ->with('lesson_id', $lesson_id);
     }
 
     /**
@@ -74,7 +75,32 @@ class TeacherAttendanceReportController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        // $attendance = TeacherAttendanceReport::findOrFail($id);
+
+
+        $get_students_attendance = DB::table('attendance')
+            ->where('attendance.lesson_id', '=', $id)
+            ->pluck('attendance.student_id');
+
+        // Dodawania danych do tabeli attendance
+        foreach ($get_students_attendance as $student_id) {
+            $attendance = TeacherAttendanceReport::where('student_id', $student_id)
+                ->where('lesson_id', $id)
+                ->first();
+            if ($attendance) {
+
+                $studentKey = $student_id;
+                $isPresentValue = $request->input("isPresent.{$studentKey}");
+
+                if ($isPresentValue !== null) {
+                    $attendance->isPresent = $isPresentValue;
+
+                    // Save the changes
+                    $attendance->save();
+                }
+            }
+        }
+        return redirect('attendanceTeacher')->with('flash_msg', 'Zaktualizowano raport!');
     }
 
     /**

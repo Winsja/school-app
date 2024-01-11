@@ -11,13 +11,11 @@
 <div class="p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-600 dark:border-gray-700">
     <h5 class="mb-6 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Edytuj raport </h5>
     <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
-        <!-- TU CHYBA BLAD ZE UPDATE TYLKO DLA JEDNEJ OSOOBY -->
-        <form action="{{ route('attendanceTeacher.update', ['attendanceTeacher'=>$attendance->id]) }}" method="post" class="max-w-sm">
+        <!-- TU CHYBA BLAD BO w tabeli attendacne sa id 1,2 a on nie widzi 5-->
+
+        <form action="{{ route('attendanceTeacher.update', ['attendanceTeacher'=>$students[0]->lesson_id]) }}" method="post" class="w-full">
             {!! csrf_field() !!}
             @method("PATCH")
-
-            <input type="hidden" name="id" id="id" value="{{$attendance->id}}" id="id" />
-
 
             <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
                 <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
@@ -42,25 +40,15 @@
                         <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                             {{ $loop->iteration }}
                         </th>
-                        <td class="px-6 py-4">
+                        <td class=" px-6 py-4">
                             {{ $item->name }}
                         </td>
-                        @if($item->isPresent)
                         <td class="px-6 py-4">
-                            <input type="radio" id="isPresent" name="{{ $loop->iteration }}" value="1" class="w-4 h-4 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" checked>
+                            <input type="radio" name="isPresent[{{ $item->id }}]" value="1" class="w-4 h-4 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" {{ $item->isPresent == 1 ? 'checked="checked"' : '' }}>
                         </td>
                         <td class="px-6 py-4">
-                            <input type="radio" id="isPresent" name="{{ $loop->iteration }}" value="0" class="w-4 h-4 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                            <input type="radio" name="isPresent[{{ $item->id }}]" value="0" class="w-4 h-4 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" {{ $item->isPresent == 0 ? 'checked="checked"' : '' }}>
                         </td>
-                        @else
-                        <td class="px-6 py-4">
-                            <input type="radio" id="isPresent" name="{{ $loop->iteration }}" value="0" class="w-4 h-4 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                        </td>
-                        <td class="px-6 py-4">
-                            <input type="radio" id="isPresent" name="{{ $loop->iteration }}" value="1" class="w-4 h-4 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" checked>
-                        </td>
-                        @endif
-
                     </tr>
                     @endforeach
                 </tbody>
