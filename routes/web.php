@@ -3,10 +3,13 @@
 use App\Http\Controllers\GroupController;
 use App\Http\Controllers\LessonsController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\StudentAttendanceController;
 use App\Http\Controllers\StudentController;
+use App\Http\Controllers\StudentGradesController;
+use App\Http\Controllers\StudentGroupsController;
+use App\Http\Controllers\StudentLessonsController;
 use App\Http\Controllers\StudentsGroupsController;
 use App\Http\Controllers\SubjectController;
-use App\Http\Controllers\TeacherAttendanceReport;
 use App\Http\Controllers\TeacherAttendanceReportController;
 use App\Http\Controllers\TeacherController;
 use App\Http\Controllers\TeacherGrades;
@@ -67,6 +70,14 @@ Route::middleware('auth', 'teacher')->group(function () {
     Route::resource('/lessons', LessonsController::class);
     Route::resource('/attendanceTeacher', TeacherAttendanceReportController::class);
     Route::resource('/gradesTeacher', TeacherGradesController::class);
+});
+
+// Route do których dostęp powinnien mieć tylko Student
+Route::middleware('auth', 'student')->group(function () {
+    Route::resource('/lessonsStudent', StudentLessonsController::class);
+    Route::resource('/groupsStudent', StudentGroupsController::class);
+    Route::resource('/gradesStudent', StudentGradesController::class);
+    Route::resource('/attendanceStudent', StudentAttendanceController::class);
 });
 
 require __DIR__ . '/auth.php';

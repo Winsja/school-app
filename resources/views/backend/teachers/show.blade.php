@@ -15,7 +15,6 @@
     <p class="mb-3 font-normal text-gray-100">Telefon kontaktowy: {{ $teachers->phone}}</p>
     <p class="mb-3 font-normal text-gray-100">Adres zamieszkania: {{ $teachers->address}}</p>
     <!-- TO DO -->
-    <p class="text-xl text-red-600">Dodać ewentualnie PRZEDMIOTY jkaie wykłada</p>
 
 </div>
 @endsection
