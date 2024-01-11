@@ -6,6 +6,7 @@ use App\Models\Group;
 use App\Models\Lesson;
 use App\Models\Subject;
 use App\Models\TeacherAttendanceReport;
+use App\Models\TeacherGrades;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -72,6 +73,15 @@ class LessonsController extends Controller
                 'lesson_id' => $lesson->id,
                 'student_id' => $student_id,
                 'isPresent' => '0',
+            ]);
+        }
+
+        // Dodawania danych do tabeli grades
+        foreach ($get_students_id as $student_id) {
+            TeacherGrades::create([
+                'lesson_id' => $lesson->id,
+                'student_id' => $student_id,
+                'grade' => null,
             ]);
         }
         return redirect('lessons')->with('flash_msg', 'Zajęcia utworzone!');

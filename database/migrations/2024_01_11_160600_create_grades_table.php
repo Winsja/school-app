@@ -13,10 +13,9 @@ return new class extends Migration
     {
         Schema::create('grades', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('teacher_id')->constrained('teachers');
             $table->foreignId('lesson_id')->constrained('lessons');
             $table->foreignId('student_id')->constrained('students');
-            $table->string('grade');
+            $table->string('grade')->nullable();
             $table->timestamps();
         });
     }

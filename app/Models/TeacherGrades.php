@@ -9,17 +9,12 @@ class TeacherGrades extends Model
 {
     protected $table = 'grades';
     protected $primaryKey = 'id';
-    protected $fillable = ['student_id', 'subject_id', 'lesson_id', 'teacher_id', 'grade'];
+    protected $fillable = ['student_id', 'lesson_id', 'grade'];
     use HasFactory;
 
     public function student()
     {
         return $this->belongsTo(Student::class);
-    }
-
-    public function subject()
-    {
-        return $this->belongsTo(Subject::class);
     }
 
     public function lesson()

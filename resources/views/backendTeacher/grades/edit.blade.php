@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('content')
 <div class="text-right">
-    <a href="{{ route ('attendanceTeacher.index') }}" class="inline-flex items-center mb-10 px-3 py-2 text-sm font-medium text-center text-white bg-gray-800 rounded-lg hover:bg-gray-700 focus:ring-4 focus:outline-none focus:ring-blue-300">
+    <a href="{{ route ('gradesTeacher.index') }}" class="inline-flex items-center mb-10 px-3 py-2 text-sm font-medium text-center text-white bg-gray-800 rounded-lg hover:bg-gray-700 focus:ring-4 focus:outline-none focus:ring-blue-300">
         <svg class="rotate-180 w-3.5 h-3.5 me-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9" />
         </svg>
@@ -9,11 +9,11 @@
     </a>
 </div>
 <div class="p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-600 dark:border-gray-700">
-    <h5 class="mb-6 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Edytuj raport </h5>
+    <h5 class="mb-6 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Edytuj oceny</h5>
     <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
         <!-- TU -->
 
-        <form action="{{ route('attendanceTeacher.update', ['attendanceTeacher'=>$students[0]->lesson_id]) }}" method="post" class="w-full">
+        <form action="{{ route('gradesTeacher.update', ['gradesTeacher'=>$students[0]->lesson_id]) }}" method="post" class="w-full">
             {!! csrf_field() !!}
             @method("PATCH")
 
@@ -27,10 +27,10 @@
                             Imie Nazwisko
                         </th>
                         <th scope="col" class="px-6 py-3">
-                            Obecny
+                            Ocena
                         </th>
                         <th scope="col" class="px-6 py-3">
-                            Nieobecny
+                            Wybierz ocenę
                         </th>
                     </tr>
                 </thead>
@@ -44,10 +44,18 @@
                             {{ $item->name }}
                         </td>
                         <td class="px-6 py-4">
-                            <input type="radio" name="isPresent[{{ $item->id }}]" value="1" class="w-4 h-4 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" {{ $item->isPresent == 1 ? 'checked="checked"' : '' }}>
+                            {{ $item->grade }}
                         </td>
                         <td class="px-6 py-4">
-                            <input type="radio" name="isPresent[{{ $item->id }}]" value="0" class="w-4 h-4 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" {{ $item->isPresent == 0 ? 'checked="checked"' : '' }}>
+                            <select name="grade[{{ $item->id }}]" id="">
+                                <option value="" {{ $item->grade === null ? 'selected' : '' }}></option>
+                                <option value="1" {{ $item->grade == 1 ? 'selected' : '' }}>1</option>
+                                <option value="2" {{ $item->grade == 2 ? 'selected' : '' }}>2</option>
+                                <option value="3" {{ $item->grade == 3 ? 'selected' : '' }}>3</option>
+                                <option value="4" {{ $item->grade == 4 ? 'selected' : '' }}>4</option>
+                                <option value="5" {{ $item->grade == 5 ? 'selected' : '' }}>5</option>
+                                <option value="6" {{ $item->grade == 6 ? 'selected' : '' }}>6</option>
+                            </select>
                         </td>
                     </tr>
                     @endforeach
