@@ -34,7 +34,7 @@ class UserController extends Controller
             'email'     => 'required|email',
             'name'     => 'required|string|max:30',
             'role'     => 'required',
-            'password' => 'required'
+            'password' => 'required|string|min:8'
         ]);
 
         $input = $request->all();
